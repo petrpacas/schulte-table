@@ -1,0 +1,19 @@
+#App {
+  text-align: center;
+}
+
+#App h1 {
+  margin: 40px 0;
+}
+
+#App label {
+  margin: 0 10px;
+}
+
+#App table {
+  margin: 40px auto 0;
+}
+
+#App table td {
+  padding: 10px;
+}

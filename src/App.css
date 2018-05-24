@@ -1,19 +1,57 @@
-#App {
-  text-align: center;
+@media screen {
+  #app {
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  #app h1 {
+    margin: 0;
+  }
+
+  #app p {
+    margin: 40px 0;
+  }
+
+  #app label {
+    margin: 0 10px;
+  }
+
+  #table {
+    margin: 40px auto 0;
+  }
+
+  #table td {
+    padding: 10px;
+  }
 }
 
-#App h1 {
-  margin: 40px 0;
-}
+@media print {
+  #app {
+    padding: 0;
+  }
 
-#App label {
-  margin: 0 10px;
-}
+  #app h1,
+  #app small,
+  #app p,
+  #config {
+    display: none;
+  }
 
-#App table {
-  margin: 40px auto 0;
-}
+  #table {
+    border-collapse: collapse;
+    margin: 0;
+    width: 100%;
+  }
 
-#App table td {
-  padding: 10px;
+  #table td {
+    border: 1px solid black;
+    font-size: 24px;
+    padding: 40px;
+    text-align: center;
+  }
+
+  #table tr:nth-of-type(odd) td:nth-of-type(even),
+  #table tr:nth-of-type(even) td:nth-of-type(odd) {
+    background-color: #eee;
+  }
 }

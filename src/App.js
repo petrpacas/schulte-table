@@ -11,7 +11,7 @@ export default class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      size: null,
+      size: 5,
     };
   }
 
@@ -21,10 +21,18 @@ export default class App extends React.Component {
     });
   }
 
-  render({size} = this.state) {
+  print() {
+    window.print();
+  }
+
+  render() {
+    const {size} = this.state;
+
     return (
-      <div id="App">
+      <div id="app">
         <h1>Schulteho tabulka</h1>
+        <small><a href="https://www.petrruzicka.com/blog/tabulky/" target="_blank" rel="noopener noreferrer">Co to je?</a></small>
+        <p>Zvolte si velikost tabulky a poté si ji <a href="" id="print" onClick={this.print}>vytiskněte</a>.</p>
         <Config handleChange={this.handleChange} />
         <Table size={size} />
       </div>

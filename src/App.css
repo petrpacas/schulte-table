@@ -1,6 +1,8 @@
 @media screen {
   #app {
-    padding: 40px 0;
+    margin: 0 auto;
+    max-width: 480px;
+    padding: 40px 20px;
     text-align: center;
   }
 
@@ -10,6 +12,10 @@
 
   #app p {
     margin: 40px 0;
+  }
+
+  .config-group {
+    margin: 0 0 10px;
   }
 
   .config-label {
@@ -73,11 +79,6 @@
     transform: translateY(-50%);
   }
 
-  .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
-  .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
-    background-color: #eee;
-  }
-
   .table-3 .table-cell {
     padding-bottom: calc(100% / 3);
   }
@@ -96,5 +97,12 @@
 
   .table-7 .table-cell {
     padding-bottom: calc(100% / 7);
+  }
+}
+
+@media all {
+  .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
+  .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
+    background-color: #eee;
   }
 }

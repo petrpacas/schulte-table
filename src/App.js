@@ -11,14 +11,15 @@ export default class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      size: 5
+      size: 5,
+      type: 'numbers'
     };
   }
 
   handleChange(e) {
-    this.setState({
-      size: e.target.value
-    });
+    const arg = e.target.value.split('-');
+
+    this.setState({ [arg[0]]: arg[1] });
   }
 
   print() {
@@ -26,7 +27,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { size } = this.state;
+    const { size, type } = this.state;
 
     return (
       <div id="app">
@@ -34,20 +35,20 @@ export default class App extends React.Component {
         <small>
           <a
             href="https://www.petrruzicka.com/blog/tabulky/"
-            target="_blank"
             rel="noopener noreferrer"
+            target="_blank"
           >
             Co to je?
           </a>
         </small>
         <p>
-          Zvolte si velikost tabulky a poté si ji{' '}
-          <a href="" class="print" onClick={this.print}>
+          Navolte si požadované vlastnosti tabulky a poté si ji{' '}
+          <a className="print" href="" onClick={this.print}>
             vytiskněte
           </a>.
         </p>
         <Config handleChange={this.handleChange} />
-        <Table size={size} />
+        <Table size={size} type={type} />
       </div>
     );
   }

@@ -60,16 +60,6 @@ export default class Config extends React.Component {
             <input
               name="size"
               onChange={handleChange}
-              selected={size === '3'}
-              type="radio"
-              value="size-3"
-            />{' '}
-            3x3
-          </label>
-          <label className="config-label">
-            <input
-              name="size"
-              onChange={handleChange}
               selected={size === '4'}
               type="radio"
               value="size-4"

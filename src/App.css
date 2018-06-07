@@ -85,10 +85,6 @@
     line-height: 24px;
   }
 
-  .table-3 .table-cell {
-    padding-bottom: calc(100% / 3);
-  }
-
   .table-4 .table-cell {
     padding-bottom: 25%;
   }

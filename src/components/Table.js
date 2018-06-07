@@ -60,7 +60,7 @@ export default class Table extends React.Component {
     return (
       <table
         className={
-          'table table-' + size + (rotated === 'true' && ' table-rotated')
+          'table table-' + size + (rotated === 'true' ? ' table-rotated' : '')
         }
       >
         <tbody>{this.generate()}</tbody>

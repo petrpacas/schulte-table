@@ -23,7 +23,11 @@ export default class Table extends React.Component {
         for (let j = 0; j < size; j++) {
           data[i][j] = (
             <td className="table-cell" key={`${i}_${j}`}>
-              <div className="table-cell-content">{shuffledRange.shift()}</div>
+              <div className="table-cell-wrapper">
+                <span className={'table-cell-content'}>
+                  {shuffledRange.shift()}
+                </span>
+              </div>
             </td>
           );
         }
@@ -51,8 +55,14 @@ export default class Table extends React.Component {
   }
 
   render() {
+    const { rotated, size } = this.props;
+
     return (
-      <table className={'table table-' + this.props.size}>
+      <table
+        className={
+          'table table-' + size + (rotated === 'true' && ' table-rotated')
+        }
+      >
         <tbody>{this.generate()}</tbody>
       </table>
     );

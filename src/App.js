@@ -11,7 +11,8 @@ export default class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      size: 5,
+      rotated: 'false',
+      size: '5',
       type: 'numbers'
     };
   }
@@ -27,7 +28,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { size, type } = this.state;
+    const { rotated, size, type } = this.state;
 
     return (
       <div id="app">
@@ -48,7 +49,7 @@ export default class App extends React.Component {
           </a>.
         </p>
         <Config handleChange={this.handleChange} />
-        <Table size={size} type={type} />
+        <Table rotated={rotated} size={size} type={type} />
       </div>
     );
   }

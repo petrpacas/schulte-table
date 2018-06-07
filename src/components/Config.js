@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class Config extends React.Component {
   render() {
-    const { handleChange, size, type } = this.props;
+    const { handleChange, rotated, size, type } = this.props;
 
     return (
       <form className="config">
@@ -28,6 +28,30 @@ export default class Config extends React.Component {
               value="type-letters"
             />{' '}
             Písmena
+          </label>
+        </fieldset>
+        <fieldset className="config-group">
+          <legend>Rotace některých znaků:</legend>
+          <label className="config-label">
+            <input
+              defaultChecked
+              name="rotated"
+              onChange={handleChange}
+              selected={rotated === 'false'}
+              type="radio"
+              value="rotated-false"
+            />{' '}
+            Vypnutá
+          </label>
+          <label className="config-label">
+            <input
+              name="rotated"
+              onChange={handleChange}
+              selected={rotated === 'true'}
+              type="radio"
+              value="rotated-true"
+            />{' '}
+            Zapnutá
           </label>
         </fieldset>
         <fieldset className="config-group">

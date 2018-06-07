@@ -66,17 +66,23 @@
     border: 1px solid black;
     font-size: 24px;
     line-height: 0;
+    padding: 0;
     position: relative;
   }
 
-  .table-cell-content {
+  .table-cell-wrapper {
+    align-items: center;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
     left: 0;
-    line-height: 24px;
     position: absolute;
     right: 0;
-    text-align: center;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 0;
+  }
+
+  .table-cell-content {
+    line-height: 24px;
   }
 
   .table-3 .table-cell {
@@ -104,5 +110,10 @@
   .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
   .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
     background-color: #eee;
+  }
+
+  .table-rotated .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
+  .table-rotated .table-row:nth-of-type(even) .table-cell:nth-of-type(even) {
+    transform: rotate(-90deg);
   }
 }

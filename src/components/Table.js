@@ -59,11 +59,7 @@ export default class Table extends React.Component {
     const { colors, rotated, size } = this.props;
 
     function getClassName() {
-      let className = 'table table-' + size;
-
-      if (colors !== 'none') {
-        className += ' table-' + colors;
-      }
+      let className = 'table table-' + size + ' table-' + colors;
 
       if (rotated !== 'false') {
         className += ' table-rotated';

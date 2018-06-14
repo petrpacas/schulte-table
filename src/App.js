@@ -24,7 +24,8 @@ export default class App extends React.Component {
     this.setState({ [arg[0]]: arg[1] });
   }
 
-  print() {
+  print(e) {
+    e.preventDefault();
     window.print();
   }
 

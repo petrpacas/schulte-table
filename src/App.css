@@ -82,6 +82,7 @@
   }
 
   .table-cell {
+    border: 1px solid black;
     line-height: 0;
     padding: 0;
     position: relative;

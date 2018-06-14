@@ -170,9 +170,9 @@ export default class Config extends React.Component {
             <input
               name="colors"
               onChange={handleChange}
-              selected={colors === 'none'}
+              selected={colors === 'plain'}
               type="radio"
-              value="colors-none"
+              value="colors-plain"
             />{' '}
             Žádné
           </label>

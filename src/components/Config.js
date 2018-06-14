@@ -2,10 +2,10 @@ import React from 'react';
 
 export default class Config extends React.Component {
   render() {
-    const { handleChange, rotated, size, type } = this.props;
+    const { colors, handleChange, rotated, size, type } = this.props;
 
-    return (
-      <form className="config">
+    function configType() {
+      return (
         <fieldset className="config-group">
           <legend>Typ:</legend>
           <label className="config-label">
@@ -30,30 +30,11 @@ export default class Config extends React.Component {
             Písmena
           </label>
         </fieldset>
-        <fieldset className="config-group">
-          <legend>Rotace některých znaků:</legend>
-          <label className="config-label">
-            <input
-              defaultChecked
-              name="rotated"
-              onChange={handleChange}
-              selected={rotated === 'false'}
-              type="radio"
-              value="rotated-false"
-            />{' '}
-            Vypnutá
-          </label>
-          <label className="config-label">
-            <input
-              name="rotated"
-              onChange={handleChange}
-              selected={rotated === 'true'}
-              type="radio"
-              value="rotated-true"
-            />{' '}
-            Zapnutá
-          </label>
-        </fieldset>
+      );
+    }
+
+    function configSize() {
+      return (
         <fieldset className="config-group">
           <legend>Rozměry:</legend>
           <label className="config-label">
@@ -98,6 +79,115 @@ export default class Config extends React.Component {
             7x7
           </label>
         </fieldset>
+      );
+    }
+
+    function configRotated() {
+      return (
+        <fieldset className="config-group">
+          <legend>Rotace některých znaků:</legend>
+          <label className="config-label">
+            <input
+              defaultChecked
+              name="rotated"
+              onChange={handleChange}
+              selected={rotated === 'false'}
+              type="radio"
+              value="rotated-false"
+            />{' '}
+            Vypnutá
+          </label>
+          <label className="config-label">
+            <input
+              name="rotated"
+              onChange={handleChange}
+              selected={rotated === 'true'}
+              type="radio"
+              value="rotated-true"
+            />{' '}
+            Zapnutá
+          </label>
+        </fieldset>
+      );
+    }
+
+    function configColors() {
+      return (
+        <fieldset className="config-group">
+          <legend>Barvy:</legend>
+          <label className="config-label">
+            <input
+              defaultChecked
+              name="colors"
+              onChange={handleChange}
+              selected={colors === 'graywhite'}
+              type="radio"
+              value="colors-graywhite"
+            />{' '}
+            Šedobílá
+          </label>
+          <label className="config-label">
+            <input
+              name="colors"
+              onChange={handleChange}
+              selected={colors === 'blackwhite'}
+              type="radio"
+              value="colors-blackwhite"
+            />{' '}
+            Černobílá
+          </label>
+          <label className="config-label">
+            <input
+              name="colors"
+              onChange={handleChange}
+              selected={colors === 'blueyellow'}
+              type="radio"
+              value="colors-blueyellow"
+            />{' '}
+            Modrožlutá
+          </label>
+          <label className="config-label">
+            <input
+              name="colors"
+              onChange={handleChange}
+              selected={colors === 'blackred'}
+              type="radio"
+              value="colors-blackred"
+            />{' '}
+            Černočervená
+          </label>
+          <label className="config-label">
+            <input
+              name="colors"
+              onChange={handleChange}
+              selected={colors === 'lowcontrastblue'}
+              type="radio"
+              value="colors-lowcontrastblue"
+            />{' '}
+            Nekontrastní modrá
+          </label>
+          <label className="config-label">
+            <input
+              name="colors"
+              onChange={handleChange}
+              selected={colors === 'none'}
+              type="radio"
+              value="colors-none"
+            />{' '}
+            Žádné
+          </label>
+        </fieldset>
+      );
+    }
+
+    return (
+      <form className="config">
+        <div className="config-flex">
+          {configType()}
+          {configSize()}
+          {configRotated()}
+        </div>
+        {configColors()}
       </form>
     );
   }

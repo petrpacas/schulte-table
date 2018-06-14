@@ -11,6 +11,7 @@ export default class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
+      colors: 'graywhite',
       rotated: 'false',
       size: '5',
       type: 'numbers'
@@ -28,28 +29,30 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { rotated, size, type } = this.state;
+    const { colors, rotated, size, type } = this.state;
 
     return (
       <div id="app">
-        <h1>Schulteho tabulka</h1>
-        <small>
-          <a
-            href="https://www.petrruzicka.com/blog/tabulky/"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Co to je?
-          </a>
-        </small>
-        <p>
-          Navolte si požadované vlastnosti tabulky a poté si ji{' '}
-          <a className="print" href="" onClick={this.print}>
-            vytiskněte
-          </a>.
-        </p>
+        <div className="intro">
+          <h1>Schulteho tabulka</h1>
+          <small>
+            <a
+              href="https://www.petrruzicka.com/blog/tabulky/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Co to je?
+            </a>
+          </small>
+          <p>
+            Navolte si požadované vlastnosti tabulky a poté si ji{' '}
+            <a className="print" href="" onClick={this.print}>
+              vytiskněte
+            </a>.
+          </p>
+        </div>
         <Config handleChange={this.handleChange} />
-        <Table rotated={rotated} size={size} type={type} />
+        <Table colors={colors} rotated={rotated} size={size} type={type} />
       </div>
     );
   }

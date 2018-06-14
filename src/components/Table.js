@@ -4,7 +4,7 @@ export default class Table extends React.Component {
   generate() {
     const { size, type } = this.props;
 
-    const sizePow = Math.pow(this.props.size, 2);
+    const sizeSquared = Math.pow(this.props.size, 2);
 
     function shuffle(arr) {
       for (let i = arr.length - 1; i > 0; i--) {
@@ -23,7 +23,7 @@ export default class Table extends React.Component {
         for (let j = 0; j < size; j++) {
           data[i][j] = (
             <td className="table-cell" key={`${i}_${j}`}>
-              <div className="table-cell-wrapper">
+              <div className="table-cell-positioning">
                 <span className={'table-cell-content'}>
                   {shuffledRange.shift()}
                 </span>
@@ -41,30 +41,47 @@ export default class Table extends React.Component {
       return data;
     }
 
+    const numbersRange = Array.from({ length: sizeSquared }, (v, i) => i + 1);
+    const lettersRange = 'A-B-C-D-E-F-G-H-I-J-K-L-M-N-O-P-Q-R-S-T-U-V-W-X-Y-Z-1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23'
+      .split('-')
+      .slice(0, sizeSquared);
+
     if (type === 'numbers') {
-      const numbersRange = Array.from({ length: sizePow }, (v, i) => i + 1);
-
       return fillTable(numbersRange);
-    } else if (type === 'letters') {
-      const lettersRange = 'A-B-C-D-E-F-G-H-I-J-K-L-M-N-O-P-Q-R-S-T-U-V-W-X-Y-Z-1A-1B-1C-1D-1E-1F-1G-1H-1I-1J-1K-1L-1M-1N-1O-1P-1Q-1R-1S-1T-1U-1V-1W'
-        .split('-')
-        .slice(0, sizePow);
+    }
 
+    if (type === 'letters') {
       return fillTable(lettersRange);
     }
   }
 
   render() {
-    const { rotated, size } = this.props;
+    const { colors, rotated, size } = this.props;
+
+    function getClassName() {
+      let className = 'table table-' + size;
+
+      if (colors !== 'none') {
+        className += ' table-' + colors;
+      }
+
+      if (rotated !== 'false') {
+        className += ' table-rotated';
+      }
+
+      return className;
+    }
 
     return (
-      <table
-        className={
-          'table table-' + size + (rotated === 'true' ? ' table-rotated' : '')
-        }
-      >
-        <tbody>{this.generate()}</tbody>
-      </table>
+      <div>
+        <button className="table-regenerate" onClick={() => this.forceUpdate()}>
+          Regenerovat
+        </button>
+
+        <table className={getClassName()}>
+          <tbody>{this.generate()}</tbody>
+        </table>
+      </div>
     );
   }
 }

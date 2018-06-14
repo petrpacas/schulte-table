@@ -1,76 +1,93 @@
 @media screen {
   #app {
     margin: 0 auto;
-    max-width: 480px;
-    padding: 40px 20px;
+    max-width: 1200px;
+    padding: 20px 40px 0;
     text-align: center;
   }
 
-  #app h1 {
+  .intro h1 {
     margin: 0;
   }
 
-  #app p {
+  .intro p {
     margin: 40px 0;
   }
 
   .config-group {
+    border: 1px solid gray;
     margin: 0 0 10px;
   }
 
   .config-label {
+    display: inline-block;
     margin: 0 10px;
   }
 
   .table {
     margin: 40px auto 0;
+    margin: 40px auto 10vh;
+    max-width: 640px;
+    max-width: 80vh;
   }
 
-  .table-cell {
-    padding: 10px;
+  .table-regenerate {
+    background: none;
+    border: 1px solid gray;
+    font-size: 14px;
+    margin-top: 20px;
+    padding: 10px 20px;
+  }
+
+  @media (max-width: 479px) {
+    .config-label {
+      display: block;
+    }
+
+    .table-cell {
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 480px) and (max-width: 959px) {
+    .table-cell {
+      font-size: 24px;
+    }
+  }
+
+  @media (min-width: 960px) {
+    .config-flex {
+      display: flex;
+    }
+
+    .config-flex .config-group {
+      flex: 1 1 auto;
+    }
+
+    .config-group + .config-group {
+      margin-left: 10px;
+    }
+
+    .table-cell {
+      font-size: 32px;
+    }
   }
 }
 
-@media print {
-  @page {
-    size: auto;
-    margin: 0;
-  }
-
-  html {
-    margin: 0;
-  }
-
-  body {
-    margin: 10mm 15mm;
-  }
-
-  #app {
-    padding: 0;
-  }
-
-  #app h1,
-  #app small,
-  #app p,
-  .config {
-    display: none;
-  }
-
+@media all {
   .table {
+    border: none;
     border-collapse: collapse;
-    margin: 0;
     width: 100%;
   }
 
   .table-cell {
-    border: 1px solid black;
-    font-size: 24px;
     line-height: 0;
     padding: 0;
     position: relative;
   }
 
-  .table-cell-wrapper {
+  .table-cell-positioning {
     align-items: center;
     bottom: 0;
     display: flex;
@@ -84,6 +101,78 @@
   .table-cell-content {
     line-height: 24px;
   }
+
+  /* Colors */
+
+  .table-graywhite .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
+  .table-graywhite .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
+    background-color: gainsboro;
+  }
+
+  .table-blackwhite .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
+  .table-blackwhite .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
+    background-color: black;
+    color: white;
+  }
+
+  .table-blueyellow .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
+  .table-blueyellow .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
+    background-color: blue;
+    color: white;
+  }
+
+  .table-blueyellow .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
+  .table-blueyellow .table-row:nth-of-type(even) .table-cell:nth-of-type(even) {
+    background-color: yellow;
+    color: black;
+  }
+
+  .table-blackred .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
+  .table-blackred .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
+    background-color: black;
+    color: white;
+  }
+
+  .table-blackred .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
+  .table-blackred .table-row:nth-of-type(even) .table-cell:nth-of-type(even) {
+    background-color: red;
+    color: white;
+  }
+
+  .table-lowcontrastblue
+    .table-row:nth-of-type(odd)
+    .table-cell:nth-of-type(even),
+  .table-lowcontrastblue
+    .table-row:nth-of-type(even)
+    .table-cell:nth-of-type(odd) {
+    background-color: turquoise;
+    color: aqua;
+  }
+
+  .table-lowcontrastblue
+    .table-row:nth-of-type(odd)
+    .table-cell:nth-of-type(odd),
+  .table-lowcontrastblue
+    .table-row:nth-of-type(even)
+    .table-cell:nth-of-type(even) {
+    background-color: aqua;
+    color: turquoise;
+  }
+
+  /* Rotated */
+
+  .table-rotated
+    .table-row:nth-of-type(odd)
+    .table-cell:nth-of-type(odd)
+    .table-cell-positioning,
+  .table-rotated
+    .table-row:nth-of-type(even)
+    .table-cell:nth-of-type(even)
+    .table-cell-positioning {
+    transform: rotate(-90deg);
+  }
+
+  /* Size */
 
   .table-4 .table-cell {
     padding-bottom: 25%;
@@ -102,14 +191,27 @@
   }
 }
 
-@media all {
-  .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
-  .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
-    background-color: #eee;
+@media print {
+  @page {
+    size: auto;
+    margin: 0;
   }
 
-  .table-rotated .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
-  .table-rotated .table-row:nth-of-type(even) .table-cell:nth-of-type(even) {
-    transform: rotate(-90deg);
+  body {
+    margin: 10mm 15mm;
+  }
+
+  .intro,
+  .config,
+  .table-regenerate {
+    display: none;
+  }
+
+  .table {
+    margin: 0;
+  }
+
+  .table-cell {
+    font-size: 32px;
   }
 }

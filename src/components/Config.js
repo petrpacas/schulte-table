@@ -1,13 +1,14 @@
 import React from 'react';
+import Locales from '../Locales';
 
 export default class Config extends React.Component {
   render() {
-    const { colors, handleChange, rotated, size, type } = this.props;
+    const { colors, lang, handleChange, rotated, size, type } = this.props;
 
     function configType() {
       return (
         <fieldset className="config-group">
-          <legend>Typ:</legend>
+          <legend>{Locales[lang].config.typeLegend}</legend>
           <label className="config-label">
             <input
               defaultChecked
@@ -17,7 +18,7 @@ export default class Config extends React.Component {
               type="radio"
               value="type-numbers"
             />{' '}
-            Čísla
+            {Locales[lang].config.typeNumbers}
           </label>
           <label className="config-label">
             <input
@@ -27,7 +28,7 @@ export default class Config extends React.Component {
               type="radio"
               value="type-letters"
             />{' '}
-            Písmena
+            {Locales[lang].config.typeLetters}
           </label>
         </fieldset>
       );
@@ -36,7 +37,7 @@ export default class Config extends React.Component {
     function configSize() {
       return (
         <fieldset className="config-group">
-          <legend>Rozměry:</legend>
+          <legend>{Locales[lang].config.sizeLegend}</legend>
           <label className="config-label">
             <input
               name="size"
@@ -85,7 +86,7 @@ export default class Config extends React.Component {
     function configRotated() {
       return (
         <fieldset className="config-group">
-          <legend>Rotace některých znaků:</legend>
+          <legend>{Locales[lang].config.rotatedLegend}</legend>
           <label className="config-label">
             <input
               defaultChecked
@@ -95,7 +96,7 @@ export default class Config extends React.Component {
               type="radio"
               value="rotated-false"
             />{' '}
-            Vypnutá
+            {Locales[lang].config.rotatedOff}
           </label>
           <label className="config-label">
             <input
@@ -105,7 +106,7 @@ export default class Config extends React.Component {
               type="radio"
               value="rotated-true"
             />{' '}
-            Zapnutá
+            {Locales[lang].config.rotatedOn}
           </label>
         </fieldset>
       );
@@ -114,7 +115,7 @@ export default class Config extends React.Component {
     function configColors() {
       return (
         <fieldset className="config-group">
-          <legend>Barvy:</legend>
+          <legend>{Locales[lang].config.colorsLegend}</legend>
           <label className="config-label">
             <input
               defaultChecked
@@ -124,7 +125,7 @@ export default class Config extends React.Component {
               type="radio"
               value="colors-graywhite"
             />{' '}
-            Šedobílá
+            {Locales[lang].config.colorsGraywhite}
           </label>
           <label className="config-label">
             <input
@@ -134,7 +135,7 @@ export default class Config extends React.Component {
               type="radio"
               value="colors-blackwhite"
             />{' '}
-            Černobílá
+            {Locales[lang].config.colorsBlackwhite}
           </label>
           <label className="config-label">
             <input
@@ -144,7 +145,7 @@ export default class Config extends React.Component {
               type="radio"
               value="colors-blueyellow"
             />{' '}
-            Modrožlutá
+            {Locales[lang].config.colorsBlueyellow}
           </label>
           <label className="config-label">
             <input
@@ -154,7 +155,7 @@ export default class Config extends React.Component {
               type="radio"
               value="colors-blackred"
             />{' '}
-            Černočervená
+            {Locales[lang].config.colorsBlackred}
           </label>
           <label className="config-label">
             <input
@@ -164,17 +165,17 @@ export default class Config extends React.Component {
               type="radio"
               value="colors-lowcontrastblue"
             />{' '}
-            Nekontrastní modrá
+            {Locales[lang].config.colorsLowcontrastblue}
           </label>
           <label className="config-label">
             <input
               name="colors"
               onChange={handleChange}
-              selected={colors === 'plain'}
+              selected={colors === 'nocolors'}
               type="radio"
-              value="colors-plain"
+              value="colors-nocolors"
             />{' '}
-            Žádné
+            {Locales[lang].config.colorsNocolors}
           </label>
         </fieldset>
       );

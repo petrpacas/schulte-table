@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Locales from './Locales';
 
 import Config from './components/Config';
 import Table from './components/Table';
@@ -9,9 +10,11 @@ export default class App extends React.Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
+    this.switchLang = this.switchLang.bind(this);
 
     this.state = {
       colors: 'graywhite',
+      lang: 'cs',
       rotated: 'false',
       size: '5',
       type: 'numbers'
@@ -24,36 +27,50 @@ export default class App extends React.Component {
     this.setState({ [arg[0]]: arg[1] });
   }
 
-  print(e) {
+  switchLang(e) {
     e.preventDefault();
-    window.print();
+
+    this.setState(prevState => {
+      if (prevState.lang === 'cs') {
+        return { lang: 'en' };
+      }
+      if (prevState.lang === 'en') {
+        return { lang: 'cs' };
+      }
+    });
   }
 
   render() {
-    const { colors, rotated, size, type } = this.state;
+    const { colors, lang, rotated, size, type } = this.state;
 
     return (
       <div id="app">
         <div className="intro">
-          <h1>Schulteho tabulka</h1>
+          <small>
+            <a href="#lang" onClick={this.switchLang}>
+              {Locales[lang].app.lang}
+            </a>
+          </small>
+          <h1>{Locales[lang].app.name}</h1>
           <small>
             <a
               href="https://www.petrruzicka.com/blog/tabulky/"
               rel="noopener noreferrer"
               target="_blank"
             >
-              Co to je?
+              {Locales[lang].app.link}
             </a>
           </small>
-          <p>
-            Navolte si požadované vlastnosti tabulky a poté si ji{' '}
-            <a className="print" href="" onClick={this.print}>
-              vytiskněte
-            </a>.
-          </p>
+          <p>{Locales[lang].app.hint}</p>
         </div>
-        <Config handleChange={this.handleChange} />
-        <Table colors={colors} rotated={rotated} size={size} type={type} />
+        <Config handleChange={this.handleChange} lang={lang} />
+        <Table
+          colors={colors}
+          lang={lang}
+          rotated={rotated}
+          size={size}
+          type={type}
+        />
       </div>
     );
   }

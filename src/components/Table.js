@@ -1,4 +1,5 @@
 import React from 'react';
+import Locales from '../Locales';
 
 export default class Table extends React.Component {
   generate() {
@@ -55,8 +56,13 @@ export default class Table extends React.Component {
     }
   }
 
+  print(e) {
+    e.preventDefault();
+    window.print();
+  }
+
   render() {
-    const { colors, rotated, size } = this.props;
+    const { colors, lang, rotated, size } = this.props;
 
     function getClassName() {
       let className = 'table table-' + size + ' table-' + colors;
@@ -70,8 +76,11 @@ export default class Table extends React.Component {
 
     return (
       <div>
-        <button className="table-regenerate" onClick={() => this.forceUpdate()}>
-          Regenerovat
+        <button className="table-button" onClick={this.print}>
+          {Locales[lang].table.print}
+        </button>
+        <button className="table-button" onClick={() => this.forceUpdate()}>
+          {Locales[lang].table.regen}
         </button>
 
         <table className={getClassName()}>

@@ -24,20 +24,42 @@
     margin: 0 10px;
   }
 
-  .table {
+  .table-wrapper {
     margin: 40px auto 0;
     margin: 40px auto 10vh;
     max-width: 640px;
     max-width: 80vh;
+    position: relative;
+  }
+
+  .table {
+    left: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    z-index: -1;
   }
 
   .table-button {
     background: none;
     border: 1px solid gray;
     font-size: 14px;
-    margin: 20px 5px 0;
+    margin: 30px 5px 0;
     padding: 10px 20px;
   }
+
+  /* Fix for html2canvas */
+
+  .table > tbody > tr > td + td {
+    border-left-width: 0 !important;
+  }
+
+  .table > tbody > tr + tr > td {
+    border-top-width: 0 !important;
+  }
+
+  /* End of fix */
 
   @media (max-width: 479px) {
     .config-label {
@@ -79,6 +101,11 @@
     border: none;
     border-collapse: collapse;
     width: 100%;
+  }
+
+  .table > tbody > tr:last-child > td:last-child {
+    background: url("./logo.png") no-repeat right bottom;
+    background-size: contain;
   }
 
   .table-cell {
@@ -204,12 +231,9 @@
 
   .intro,
   .config,
-  .table-button {
+  .table-button,
+  .table-canvas {
     display: none;
-  }
-
-  .table {
-    margin: 0;
   }
 
   .table-cell {

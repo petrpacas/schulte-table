@@ -3,7 +3,6 @@ export default {
     app: {
       lang: 'Switch to English',
       name: 'Schulteho tabulka',
-      link: 'Co to je?',
       hint: 'Navolte si požadované vlastnosti tabulky a poté si ji vytiskněte.'
     },
     config: {
@@ -32,7 +31,6 @@ export default {
     app: {
       lang: 'Přepnout do češtiny',
       name: 'Schulte table',
-      link: 'What is it? (in Czech)',
       hint: 'Select the desired table options and then print it.'
     },
     config: {

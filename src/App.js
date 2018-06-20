@@ -46,19 +46,10 @@ export default class App extends React.Component {
     return (
       <div id="app">
         <div className="intro">
+          <h1>{Locales[lang].app.name}</h1>
           <small>
             <a href="#lang" onClick={this.switchLang}>
               {Locales[lang].app.lang}
-            </a>
-          </small>
-          <h1>{Locales[lang].app.name}</h1>
-          <small>
-            <a
-              href="https://www.petrruzicka.com/blog/tabulky/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              {Locales[lang].app.link}
             </a>
           </small>
           <p>{Locales[lang].app.hint}</p>

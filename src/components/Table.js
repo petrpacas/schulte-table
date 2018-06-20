@@ -1,7 +1,18 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import html2canvas from 'html2canvas';
 import Locales from '../Locales';
 
 export default class Table extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.displayTable = this.displayTable.bind(this);
+    this.displayTable = this.displayTable.bind(this);
+
+    this.tempTable = [];
+  }
+
   generate() {
     const { size, type } = this.props;
 
@@ -56,23 +67,77 @@ export default class Table extends React.Component {
     }
   }
 
+  displayTable() {
+    const { colors, rotated, size } = this.props;
+
+    function getClassName() {
+      let className = 'table table-' + size + ' table-' + colors;
+      if (rotated !== 'false') {
+        className += ' table-rotated';
+      }
+      return className;
+    }
+
+    const tableContent = (
+      <table className={getClassName()} id="table">
+        <tbody>{this.generate()}</tbody>
+      </table>
+    );
+    const tableContainer = document.getElementById('tableContainer');
+
+    ReactDOM.render(tableContent, tableContainer, () => {
+      html2canvas(document.getElementById('table'), {
+        canvas: document.getElementById('tableCanvas'),
+        logging: false,
+        scale: 1
+      }).then(() => {
+        this.tempTable = document.getElementById('table');
+        ReactDOM.unmountComponentAtNode(tableContainer);
+      });
+    });
+  }
+
+  printSetup() {
+    const beforePrint = () => {
+      if (document.getElementById('tableContainer') && this.tempTable) {
+        document.getElementById('tableContainer').appendChild(this.tempTable);
+      }
+    };
+
+    const afterPrint = () => {
+      if (document.getElementById('table')) {
+        document.getElementById('table').remove();
+      }
+    };
+
+    if (window.matchMedia) {
+      var mediaQueryList = window.matchMedia('print');
+      mediaQueryList.addListener(function(mql) {
+        mql.matches ? beforePrint() : afterPrint();
+      });
+    } else {
+      window.addEventListener('beforeprint', beforePrint, false);
+      window.addEventListener('afterprint', afterPrint, false);
+    }
+  }
+
   print(e) {
     e.preventDefault();
     window.print();
   }
 
+  componentDidMount() {
+    this.displayTable();
+  }
+
+  componentDidUpdate() {
+    this.displayTable();
+  }
+
   render() {
-    const { colors, lang, rotated, size } = this.props;
+    const { lang } = this.props;
 
-    function getClassName() {
-      let className = 'table table-' + size + ' table-' + colors;
-
-      if (rotated !== 'false') {
-        className += ' table-rotated';
-      }
-
-      return className;
-    }
+    this.printSetup();
 
     return (
       <div>
@@ -83,9 +148,10 @@ export default class Table extends React.Component {
           {Locales[lang].table.regen}
         </button>
 
-        <table className={getClassName()}>
-          <tbody>{this.generate()}</tbody>
-        </table>
+        <div className="table-wrapper">
+          <div id="tableContainer" />
+          <canvas className="table-canvas" id="tableCanvas" />
+        </div>
       </div>
     );
   }

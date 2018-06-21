@@ -49,7 +49,12 @@
     padding: 10px 20px;
   }
 
-  /* Fix for html2canvas */
+  /* Fixes for html2canvas borders in Chrome */
+
+  .table {
+    border-bottom-width: 0 !important;
+    border-right-width: 0 !important;
+  }
 
   .table > tbody > tr > td + td {
     border-left-width: 0 !important;
@@ -59,7 +64,7 @@
     border-top-width: 0 !important;
   }
 
-  /* End of fix */
+  /* End of fixes */
 
   @media (max-width: 479px) {
     .config-label {
@@ -98,14 +103,14 @@
 
 @media all {
   .table {
-    border: none;
+    border: 1px solid black;
     border-collapse: collapse;
     width: 100%;
   }
 
   .table > tbody > tr:last-child > td:last-child {
     background: url("./logo.png") no-repeat right bottom;
-    background-size: contain;
+    background-size: 100% auto;
   }
 
   .table-cell {
@@ -115,7 +120,16 @@
     position: relative;
   }
 
-  .table-cell-positioning {
+  /* Fix for border-collapse borders in Firefox */
+
+  _:-moz-tree-row(hover),
+  .table-cell {
+    background-clip: padding-box;
+  }
+
+  /* End of fix */
+
+  .table-cell-position {
     align-items: center;
     bottom: 0;
     display: flex;
@@ -192,11 +206,11 @@
   .table-rotated
     .table-row:nth-of-type(odd)
     .table-cell:nth-of-type(odd)
-    .table-cell-positioning,
+    .table-cell-position,
   .table-rotated
     .table-row:nth-of-type(even)
     .table-cell:nth-of-type(even)
-    .table-cell-positioning {
+    .table-cell-position {
     transform: rotate(-90deg);
   }
 

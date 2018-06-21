@@ -35,7 +35,7 @@ export default class Table extends React.Component {
         for (let j = 0; j < size; j++) {
           data[i][j] = (
             <td className="table-cell" key={`${i}_${j}`}>
-              <div className="table-cell-positioning">
+              <div className="table-cell-position">
                 <span className={'table-cell-content'}>
                   {shuffledRange.shift()}
                 </span>
@@ -88,8 +88,7 @@ export default class Table extends React.Component {
     ReactDOM.render(tableContent, tableContainer, () => {
       html2canvas(document.getElementById('table'), {
         canvas: document.getElementById('tableCanvas'),
-        logging: false,
-        scale: 1
+        logging: false
       }).then(() => {
         this.tempTable = document.getElementById('table');
         ReactDOM.unmountComponentAtNode(tableContainer);
@@ -110,15 +109,8 @@ export default class Table extends React.Component {
       }
     };
 
-    if (window.matchMedia) {
-      var mediaQueryList = window.matchMedia('print');
-      mediaQueryList.addListener(function(mql) {
-        mql.matches ? beforePrint() : afterPrint();
-      });
-    } else {
-      window.addEventListener('beforeprint', beforePrint, false);
-      window.addEventListener('afterprint', afterPrint, false);
-    }
+    window.onbeforeprint = beforePrint;
+    window.onafterprint = afterPrint;
   }
 
   print(e) {

@@ -22,8 +22,11 @@ export default {
       colorsNocolors: 'Žádné'
     },
     table: {
-      print: 'Tisknout',
-      regen: 'Regenerovat'
+      printSingle: 'Tisknout',
+      printMultiple: 'Tisknout mnoho',
+      printHowMany: 'Kolik tabulek vygenerovat? (1-100)',
+      printCountIncorrect: 'Zadejte celé číslo od 1 do 100.',
+      regenerateSingle: 'Regenerovat'
     }
   },
 
@@ -50,8 +53,11 @@ export default {
       colorsNocolors: 'None'
     },
     table: {
-      print: 'Print',
-      regen: 'Regenerate'
+      printSingle: 'Print',
+      printMultiple: 'Print multiple',
+      printHowMany: 'How many tables to generate? (1-100)',
+      printCountIncorrect: 'Input an integer ranging from 1 to 100.',
+      regenerateSingle: 'Regenerate'
     }
   }
 };

@@ -12,6 +12,8 @@ export default class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.switchLang = this.switchLang.bind(this);
 
+    this.tableRef = React.createRef();
+
     this.state = {
       colors: 'graywhite',
       lang: 'cs',
@@ -24,12 +26,15 @@ export default class App extends React.Component {
   handleChange(e) {
     const arg = e.target.value.split('-');
 
-    this.setState({ [arg[0]]: arg[1] });
+    this.setState({ [arg[0]]: arg[1] }, () => {
+      if (this.tableRef) {
+        this.tableRef.current.generateSingle();
+      }
+    });
   }
 
   switchLang(e) {
     e.preventDefault();
-
     this.setState(prevState => {
       if (prevState.lang === 'cs') {
         return { lang: 'en' };
@@ -47,15 +52,20 @@ export default class App extends React.Component {
       <div id="app">
         <div className="intro">
           <h1>{Locales[lang].app.name}</h1>
+
           <small>
             <a href="#lang" onClick={this.switchLang}>
               {Locales[lang].app.lang}
             </a>
           </small>
+
           <p>{Locales[lang].app.hint}</p>
         </div>
+
         <Config handleChange={this.handleChange} lang={lang} />
+
         <Table
+          ref={this.tableRef}
           colors={colors}
           lang={lang}
           rotated={rotated}

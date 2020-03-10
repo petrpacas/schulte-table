@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import html2canvas from 'html2canvas';
 import Locales from '../Locales';
 
@@ -7,31 +6,40 @@ export default class Table extends React.Component {
   constructor(props) {
     super(props);
 
-    this.displayTable = this.displayTable.bind(this);
-    this.displayTable = this.displayTable.bind(this);
+    this.generateTableRows = this.generateTableRows.bind(this);
+    this.generateTableClassName = this.generateTableClassName.bind(this);
+    this.generateSingle = this.generateSingle.bind(this);
+    this.printSingle = this.printSingle.bind(this);
+    this.generateAndPrintMultiple = this.generateAndPrintMultiple.bind(this);
 
-    this.tempTable = [];
+    this.state = {
+      sourceSingle: [],
+      sourceSingleVisible: false,
+      sourceMultiple: [],
+      sourceMultipleVisible: false,
+    };
   }
 
-  generate() {
+  generateTableRows() {
     const { size, type } = this.props;
+    const sizeSquared = Math.pow(size, 2);
 
-    const sizeSquared = Math.pow(this.props.size, 2);
-
-    function shuffle(arr) {
+    const shuffle = arr => {
       for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]];
       }
-      return arr;
-    }
 
-    function fillTable(range) {
+      return arr;
+    };
+
+    const generate = range => {
       const data = [];
       const shuffledRange = shuffle(range);
 
       for (let i = 0; i < size; i++) {
         data[i] = [];
+
         for (let j = 0; j < size; j++) {
           data[i][j] = (
             <td className="table-cell" key={`${i}_${j}`}>
@@ -43,6 +51,7 @@ export default class Table extends React.Component {
             </td>
           );
         }
+
         data[i] = (
           <tr className="table-row" key={`${i}`}>
             {data[i]}
@@ -51,7 +60,7 @@ export default class Table extends React.Component {
       }
 
       return data;
-    }
+    };
 
     const numbersRange = Array.from({ length: sizeSquared }, (v, i) => i + 1);
     const lettersRange = 'A-B-C-D-E-F-G-H-I-J-K-L-M-N-O-P-Q-R-S-T-U-V-W-X-Y-Z-1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23'
@@ -59,92 +68,106 @@ export default class Table extends React.Component {
       .slice(0, sizeSquared);
 
     if (type === 'numbers') {
-      return fillTable(numbersRange);
+      return generate(numbersRange);
     }
 
     if (type === 'letters') {
-      return fillTable(lettersRange);
+      return generate(lettersRange);
     }
   }
 
-  displayTable() {
+  generateTableClassName(multiple = false) {
     const { colors, rotated, size } = this.props;
-
-    function getClassName() {
-      let className = 'table table-' + size + ' table-' + colors;
-      if (rotated !== 'false') {
-        className += ' table-rotated';
-      }
-      return className;
+    let className = 'table table-' + size + ' table-' + colors;
+    if (rotated !== 'false') {
+      className += ' table-rotated';
+    }
+    if (multiple) {
+      className += ' table-printonly';
     }
 
-    const tableContent = (
-      <table className={getClassName()} id="table">
-        <tbody>{this.generate()}</tbody>
-      </table>
-    );
-    const tableContainer = document.getElementById('tableContainer');
+    return className;
+  }
 
-    ReactDOM.render(tableContent, tableContainer, () => {
-      html2canvas(document.getElementById('table'), {
+  generateSingle() {
+    const sourceSingle = [
+      <table className={this.generateTableClassName()} id="single" key="single">
+        <tbody>{this.generateTableRows()}</tbody>
+      </table>
+    ];
+
+    this.setState({ sourceSingle, sourceSingleVisible: true }, () => {
+      html2canvas(document.getElementById('single'), {
         canvas: document.getElementById('tableCanvas'),
-        logging: false
+        logging: false,
       }).then(() => {
-        this.tempTable = document.getElementById('table');
-        ReactDOM.unmountComponentAtNode(tableContainer);
+        this.setState({ sourceSingleVisible: false });
       });
     });
   }
 
-  printSetup() {
-    const beforePrint = () => {
-      if (document.getElementById('tableContainer') && this.tempTable) {
-        document.getElementById('tableContainer').appendChild(this.tempTable);
-      }
-    };
-
-    const afterPrint = () => {
-      if (document.getElementById('table')) {
-        document.getElementById('table').remove();
-      }
-    };
-
-    window.onbeforeprint = beforePrint;
-    window.onafterprint = afterPrint;
+  printSingle(e) {
+    e.preventDefault();
+    this.setState({ sourceSingleVisible: true }, () => window.print());
   }
 
-  print(e) {
+  generateAndPrintMultiple(e) {
     e.preventDefault();
-    window.print();
+    const { lang } = this.props;
+    const sourceMultiple = [];
+    const count = Number(prompt(Locales[lang].table.printHowMany), 10);
+
+    if (!isNaN(count) && count % 1 === 0 && count > 0 && count < 101) {
+      for (let i = 0; i < count; i++) {
+        sourceMultiple.push(
+          <table className={this.generateTableClassName(true)} key={`multiple_${i}`}>
+            <tbody>{this.generateTableRows()}</tbody>
+          </table>
+        );
+      }
+
+      this.setState({ sourceMultiple, sourceMultipleVisible: true }, () => window.print());
+    } else {
+      alert(Locales[lang].table.printCountIncorrect);
+    }
   }
 
   componentDidMount() {
-    this.displayTable();
-  }
-
-  componentDidUpdate() {
-    this.displayTable();
+    this.generateSingle();
   }
 
   render() {
     const { lang } = this.props;
+    const {
+      sourceSingle,
+      sourceSingleVisible,
+      sourceMultiple,
+      sourceMultipleVisible
+    } = this.state;
 
-    this.printSetup();
+    window.onafterprint = () => this.setState({
+      sourceSingleVisible: false,
+      sourceMultipleVisible: false
+    });
 
     return (
-      <div>
-        <button className="table-button" onClick={this.print}>
-          {Locales[lang].table.print}
+      <>
+        <button className="table-button" onClick={this.printSingle}>
+          {Locales[lang].table.printSingle}
         </button>
-        <button className="table-button" onClick={() => this.forceUpdate()}>
-          {Locales[lang].table.regen}
+        <button className="table-button" onClick={this.generateAndPrintMultiple}>
+          {Locales[lang].table.printMultiple}
+        </button>
+        <button className="table-button" onClick={this.generateSingle}>
+          {Locales[lang].table.regenerateSingle}
         </button>
 
-        <div className="table-wrapper">
-          <div id="tableContainer" />
+        <div className="table-container">
+          {sourceSingleVisible && sourceSingle}
+          {sourceMultipleVisible && sourceMultiple}
           <canvas className="table-canvas" id="tableCanvas" />
         </div>
-      </div>
+      </>
     );
   }
 }

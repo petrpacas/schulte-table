@@ -1,9 +1,9 @@
-import React from 'react';
-import './App.css';
-import Locales from './Locales';
+import React from "react";
+import "./App.css";
+import Locales from "./Locales";
 
-import Config from './components/Config';
-import Table from './components/Table';
+import Config from "./components/Config";
+import Table from "./components/Table";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -15,16 +15,16 @@ export default class App extends React.Component {
     this.tableRef = React.createRef();
 
     this.state = {
-      colors: 'graywhite',
-      lang: 'cs',
-      rotated: 'false',
-      size: '5',
-      type: 'numbers'
+      colors: "graywhite",
+      lang: "cs",
+      rotated: "false",
+      size: "5",
+      type: "numbers",
     };
   }
 
   handleChange(e) {
-    const arg = e.target.value.split('-');
+    const arg = e.target.value.split("-");
 
     this.setState({ [arg[0]]: arg[1] }, () => {
       if (this.tableRef) {
@@ -35,12 +35,12 @@ export default class App extends React.Component {
 
   switchLang(e) {
     e.preventDefault();
-    this.setState(prevState => {
-      if (prevState.lang === 'cs') {
-        return { lang: 'en' };
+    this.setState((prevState) => {
+      if (prevState.lang === "cs") {
+        return { lang: "en" };
       }
-      if (prevState.lang === 'en') {
-        return { lang: 'cs' };
+      if (prevState.lang === "en") {
+        return { lang: "cs" };
       }
     });
   }

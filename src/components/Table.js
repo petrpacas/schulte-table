@@ -1,6 +1,8 @@
-import React from 'react';
-import html2canvas from 'html2canvas';
-import Locales from '../Locales';
+/* eslint-disable react/prop-types */
+
+import React from "react";
+import html2canvas from "html2canvas";
+import Locales from "../Locales";
 
 export default class Table extends React.Component {
   constructor(props) {
@@ -24,7 +26,7 @@ export default class Table extends React.Component {
     const { size, type } = this.props;
     const sizeSquared = Math.pow(size, 2);
 
-    const shuffle = arr => {
+    const shuffle = (arr) => {
       for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -33,7 +35,7 @@ export default class Table extends React.Component {
       return arr;
     };
 
-    const generate = range => {
+    const generate = (range) => {
       const data = [];
       const shuffledRange = shuffle(range);
 
@@ -44,7 +46,7 @@ export default class Table extends React.Component {
           data[i][j] = (
             <td className="table-cell" key={`${i}_${j}`}>
               <div className="table-cell-position">
-                <span className={'table-cell-content'}>
+                <span className={"table-cell-content"}>
                   {shuffledRange.shift()}
                 </span>
               </div>
@@ -63,27 +65,28 @@ export default class Table extends React.Component {
     };
 
     const numbersRange = Array.from({ length: sizeSquared }, (v, i) => i + 1);
-    const lettersRange = 'A-B-C-D-E-F-G-H-I-J-K-L-M-N-O-P-Q-R-S-T-U-V-W-X-Y-Z-1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23'
-      .split('-')
-      .slice(0, sizeSquared);
+    const lettersRange =
+      "A-B-C-D-E-F-G-H-I-J-K-L-M-N-O-P-Q-R-S-T-U-V-W-X-Y-Z-1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18-19-20-21-22-23"
+        .split("-")
+        .slice(0, sizeSquared);
 
-    if (type === 'numbers') {
+    if (type === "numbers") {
       return generate(numbersRange);
     }
 
-    if (type === 'letters') {
+    if (type === "letters") {
       return generate(lettersRange);
     }
   }
 
   generateTableClassName(multiple = false) {
     const { colors, rotated, size } = this.props;
-    let className = 'table table-' + size + ' table-' + colors;
-    if (rotated !== 'false') {
-      className += ' table-rotated';
+    let className = "table table-" + size + " table-" + colors;
+    if (rotated !== "false") {
+      className += " table-rotated";
     }
     if (multiple) {
-      className += ' table-printonly';
+      className += " table-printonly";
     }
 
     return className;
@@ -93,14 +96,12 @@ export default class Table extends React.Component {
     const sourceSingle = [
       <table className={this.generateTableClassName()} id="single" key="single">
         <tbody>{this.generateTableRows()}</tbody>
-      </table>
+      </table>,
     ];
 
     this.setState({ sourceSingle, sourceSingleVisible: true }, () => {
-      html2canvas(document.getElementById('single'), {
-        canvas: document.getElementById('tableCanvas'),
-        logging: false,
-      }).then(() => {
+      html2canvas(document.getElementById("single")).then((canvas) => {
+        document.getElementById("canvasContainer").replaceChildren(canvas);
         this.setState({ sourceSingleVisible: false });
       });
     });
@@ -117,16 +118,21 @@ export default class Table extends React.Component {
     const sourceMultiple = [];
     const count = Number(prompt(Locales[lang].table.printHowMany), 10);
 
-    if (!isNaN(count) && count % 1 === 0 && count > 0 && count < 101) {
+    if (!isNaN(count) && count % 1 === 0 && count > 1 && count < 101) {
       for (let i = 0; i < count; i++) {
         sourceMultiple.push(
-          <table className={this.generateTableClassName(true)} key={`multiple_${i}`}>
-            <tbody>{this.generateTableRows()}</tbody>
-          </table>
+          <div key={`multiple_${i}`}>
+            <table className={this.generateTableClassName(true)}>
+              <tbody>{this.generateTableRows()}</tbody>
+            </table>
+            {i + 1 < count ? <div className="page-break"></div> : undefined}
+          </div>
         );
       }
 
-      this.setState({ sourceMultiple, sourceMultipleVisible: true }, () => window.print());
+      this.setState({ sourceMultiple, sourceMultipleVisible: true }, () =>
+        window.print()
+      );
     } else {
       alert(Locales[lang].table.printCountIncorrect);
     }
@@ -142,30 +148,34 @@ export default class Table extends React.Component {
       sourceSingle,
       sourceSingleVisible,
       sourceMultiple,
-      sourceMultipleVisible
+      sourceMultipleVisible,
     } = this.state;
 
-    window.onafterprint = () => this.setState({
-      sourceSingleVisible: false,
-      sourceMultipleVisible: false
-    });
+    window.onafterprint = () =>
+      this.setState({
+        sourceSingleVisible: false,
+        sourceMultipleVisible: false,
+      });
 
     return (
       <>
+        <button className="table-button" onClick={this.generateSingle}>
+          {Locales[lang].table.regenerateSingle}
+        </button>
         <button className="table-button" onClick={this.printSingle}>
           {Locales[lang].table.printSingle}
         </button>
-        <button className="table-button" onClick={this.generateAndPrintMultiple}>
+        <button
+          className="table-button"
+          onClick={this.generateAndPrintMultiple}
+        >
           {Locales[lang].table.printMultiple}
-        </button>
-        <button className="table-button" onClick={this.generateSingle}>
-          {Locales[lang].table.regenerateSingle}
         </button>
 
         <div className="table-container">
           {sourceSingleVisible && sourceSingle}
           {sourceMultipleVisible && sourceMultiple}
-          <canvas className="table-canvas" id="tableCanvas" />
+          <div className="canvas-container" id="canvasContainer" />
         </div>
       </>
     );

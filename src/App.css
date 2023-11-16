@@ -1,246 +1,147 @@
+.table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.table-cell {
+  border: 1px solid black;
+  position: relative;
+  font-size: 2rem;
+}
+
+.table-cell-position {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+/* Colors */
+
+.table-graywhite .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
+.table-graywhite .table-row:nth-of-type(even) .table-cell:nth-of-type(even),
+.table-blackwhite .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
+.table-blackwhite .table-row:nth-of-type(even) .table-cell:nth-of-type(even) {
+  background-color: white;
+}
+
+.table-graywhite .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
+.table-graywhite .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
+  background-color: gainsboro;
+}
+
+.table-blackwhite .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
+.table-blackwhite .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
+  background-color: black;
+  color: white;
+}
+
+.table-blueyellow .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
+.table-blueyellow .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
+  background-color: blue;
+  color: white;
+}
+
+.table-blueyellow .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
+.table-blueyellow .table-row:nth-of-type(even) .table-cell:nth-of-type(even) {
+  background-color: yellow;
+  color: black;
+}
+
+.table-blackred .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
+.table-blackred .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
+  background-color: black;
+  color: white;
+}
+
+.table-blackred .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
+.table-blackred .table-row:nth-of-type(even) .table-cell:nth-of-type(even) {
+  background-color: red;
+  color: white;
+}
+
+.table-lowcontrastblue
+  .table-row:nth-of-type(odd)
+  .table-cell:nth-of-type(even),
+.table-lowcontrastblue
+  .table-row:nth-of-type(even)
+  .table-cell:nth-of-type(odd) {
+  background-color: turquoise;
+  color: aqua;
+}
+
+.table-lowcontrastblue .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
+.table-lowcontrastblue
+  .table-row:nth-of-type(even)
+  .table-cell:nth-of-type(even) {
+  background-color: aqua;
+  color: turquoise;
+}
+
+/* Rotated */
+
+.table-rotated
+  .table-row:nth-of-type(odd)
+  .table-cell:nth-of-type(odd)
+  .table-cell-position,
+.table-rotated
+  .table-row:nth-of-type(even)
+  .table-cell:nth-of-type(even)
+  .table-cell-position {
+  transform: rotate(-90deg);
+}
+
+/* Size */
+
+.table-4 .table-cell {
+  padding-bottom: 25%;
+}
+
+.table-5 .table-cell {
+  padding-bottom: 20%;
+}
+
+.table-6 .table-cell {
+  padding-bottom: calc(100% / 6);
+}
+
+.table-7 .table-cell {
+  padding-bottom: calc(100% / 7);
+}
+
 @media screen {
-  #app {
-    margin: 0 auto;
-    max-width: 1200px;
-    padding: 20px 40px 0;
-    text-align: center;
-  }
-
-  .intro h1 {
-    margin: 0;
-  }
-
-  .intro p {
-    margin: 40px 0;
-  }
-
-  .config-group {
-    border: 1px solid gray;
-    margin: 0 0 10px;
-  }
-
-  .config-label {
-    display: inline-block;
-    margin: 0 10px;
+  body {
+    @apply bg-slate-100;
   }
 
   .table-container {
-    margin: 40px auto 0;
-    margin: 40px auto 10vh;
-    max-width: 640px;
-    max-width: 80vh;
-    position: relative;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 80rem;
+    margin: 0 auto;
   }
 
   .table {
-    left: 0;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    z-index: -1;
+    cursor: pointer;
+    width: 90vh;
+    width: 90dvh;
   }
 
   .table-printonly {
     display: none;
   }
 
-  .table-button {
-    background: none;
-    border: 1px solid gray;
-    font-size: 14px;
-    margin: 30px 5px 0;
-    padding: 10px 20px;
-  }
-
-  /* Fixes for html2canvas borders in Chrome */
-
-  .table {
-    border-bottom-width: 0 !important;
-    border-right-width: 0 !important;
-  }
-
-  .table > tbody > tr > td + td {
-    border-left-width: 0 !important;
-  }
-
-  .table > tbody > tr + tr > td {
-    border-top-width: 0 !important;
-  }
-
-  /* End of fixes */
-
-  @media (max-width: 479px) {
-    .config-label {
-      display: block;
-    }
-
+  @media (max-width: 639px) {
     .table-cell {
-      font-size: 16px;
+      font-size: 1.5rem;
     }
-  }
-
-  @media (min-width: 480px) and (max-width: 959px) {
-    .table-cell {
-      font-size: 24px;
-    }
-  }
-
-  @media (min-width: 960px) {
-    .config-flex {
-      display: flex;
-    }
-
-    .config-flex .config-group {
-      flex: 1 1 auto;
-    }
-
-    .config-group + .config-group {
-      margin-left: 10px;
-    }
-
-    .table-cell {
-      font-size: 32px;
-    }
-  }
-}
-
-@media all {
-  .table {
-    border: 1px solid black;
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  .table > tbody > tr:last-child > td:last-child {
-    background: url("./logo.png") no-repeat right bottom;
-    background-size: 100% auto;
-  }
-
-  .table-cell {
-    border: 1px solid black;
-    line-height: 0;
-    padding: 0;
-    position: relative;
-  }
-
-  /* Fix for border-collapse borders in Firefox */
-
-  _:-moz-tree-row(hover),
-  .table-cell {
-    background-clip: padding-box;
-  }
-
-  /* End of fix */
-
-  .table-cell-position {
-    align-items: center;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
-  .table-cell-content {
-    line-height: 24px;
-  }
-
-  /* Colors */
-
-  .table-graywhite .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
-  .table-graywhite .table-row:nth-of-type(even) .table-cell:nth-of-type(even),
-  .table-blackwhite .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
-  .table-blackwhite .table-row:nth-of-type(even) .table-cell:nth-of-type(even) {
-    background-color: white;
-  }
-
-  .table-graywhite .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
-  .table-graywhite .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
-    background-color: gainsboro;
-  }
-
-  .table-blackwhite .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
-  .table-blackwhite .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
-    background-color: black;
-    color: white;
-  }
-
-  .table-blueyellow .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
-  .table-blueyellow .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
-    background-color: blue;
-    color: white;
-  }
-
-  .table-blueyellow .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
-  .table-blueyellow .table-row:nth-of-type(even) .table-cell:nth-of-type(even) {
-    background-color: yellow;
-    color: black;
-  }
-
-  .table-blackred .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
-  .table-blackred .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
-    background-color: black;
-    color: white;
-  }
-
-  .table-blackred .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
-  .table-blackred .table-row:nth-of-type(even) .table-cell:nth-of-type(even) {
-    background-color: red;
-    color: white;
-  }
-
-  .table-lowcontrastblue
-    .table-row:nth-of-type(odd)
-    .table-cell:nth-of-type(even),
-  .table-lowcontrastblue
-    .table-row:nth-of-type(even)
-    .table-cell:nth-of-type(odd) {
-    background-color: turquoise;
-    color: aqua;
-  }
-
-  .table-lowcontrastblue
-    .table-row:nth-of-type(odd)
-    .table-cell:nth-of-type(odd),
-  .table-lowcontrastblue
-    .table-row:nth-of-type(even)
-    .table-cell:nth-of-type(even) {
-    background-color: aqua;
-    color: turquoise;
-  }
-
-  /* Rotated */
-
-  .table-rotated
-    .table-row:nth-of-type(odd)
-    .table-cell:nth-of-type(odd)
-    .table-cell-position,
-  .table-rotated
-    .table-row:nth-of-type(even)
-    .table-cell:nth-of-type(even)
-    .table-cell-position {
-    transform: rotate(-90deg);
-  }
-
-  /* Size */
-
-  .table-4 .table-cell {
-    padding-bottom: 25%;
-  }
-
-  .table-5 .table-cell {
-    padding-bottom: 20%;
-  }
-
-  .table-6 .table-cell {
-    padding-bottom: calc(100% / 6);
-  }
-
-  .table-7 .table-cell {
-    padding-bottom: calc(100% / 7);
   }
 }
 
@@ -250,26 +151,16 @@
     size: auto;
   }
 
-  body {
-    margin: 0;
-  }
-
-  .intro,
-  .config,
-  .table-button,
-  .canvas-container {
-    display: none;
-  }
-
   .page-break {
     break-before: page;
   }
 
-  .table-printonly {
-    display: table;
+  .table {
+    display: none;
   }
 
-  .table-cell {
-    font-size: 32px;
+  .table-printonly {
+    display: table;
+    width: 99.9%;
   }
 }

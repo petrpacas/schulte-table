@@ -6,9 +6,8 @@ Drobná aplikace na [trénování postřehu](https://www.petrruzicka.com/blog/ta
 
 ## Jaké má aplikace funkce?
 
-- Vygenerování jedné samostatné tabulky podle parametrů obtížnosti
-- Příprava libovolného počtu tabulek k tisku
-- Ochrana tabulky pomocí vodoznaku
+- Vygenerování a zobrazení Schulteho tabulky podle parametrů obtížnosti
+- Tisk libovolného počtu tabulek (1-100)
 - 2 jazykové mutace
 
 ## Kde tahle verze běží?

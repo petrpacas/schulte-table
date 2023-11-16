@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
-import Locales from "./Locales";
-
+import Nav from "./components/Nav";
 import Config from "./components/Config";
 import Table from "./components/Table";
 
@@ -15,10 +14,10 @@ export default class App extends React.Component {
     this.tableRef = React.createRef();
 
     this.state = {
-      colors: "graywhite",
       lang: "cs",
+      colors: "graywhite",
       rotated: "false",
-      size: "5",
+      size: "4",
       type: "numbers",
     };
   }
@@ -33,12 +32,12 @@ export default class App extends React.Component {
     });
   }
 
-  switchLang(e) {
-    e.preventDefault();
+  switchLang() {
     this.setState((prevState) => {
       if (prevState.lang === "cs") {
         return { lang: "en" };
       }
+
       if (prevState.lang === "en") {
         return { lang: "cs" };
       }
@@ -46,33 +45,30 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { colors, lang, rotated, size, type } = this.state;
+    const { lang, colors, rotated, size, type } = this.state;
 
     return (
-      <div id="app">
-        <div className="intro">
-          <h1>{Locales[lang].app.name}</h1>
+      <>
+        <Nav switchLang={this.switchLang} lang={lang} />
 
-          <small>
-            <a href="#lang" onClick={this.switchLang}>
-              {Locales[lang].app.lang}
-            </a>
-          </small>
-
-          <p>{Locales[lang].app.hint}</p>
-        </div>
-
-        <Config handleChange={this.handleChange} lang={lang} />
-
-        <Table
-          ref={this.tableRef}
-          colors={colors}
+        <Config
+          handleChange={this.handleChange}
           lang={lang}
+          colors={colors}
           rotated={rotated}
           size={size}
           type={type}
         />
-      </div>
+
+        <Table
+          ref={this.tableRef}
+          lang={lang}
+          colors={colors}
+          rotated={rotated}
+          size={size}
+          type={type}
+        />
+      </>
     );
   }
 }

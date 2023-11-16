@@ -1,7 +1,5 @@
 /* eslint-disable react/prop-types */
-
 import React from "react";
-import html2canvas from "html2canvas";
 import Locales from "../Locales";
 
 export default class Table extends React.Component {
@@ -11,14 +9,11 @@ export default class Table extends React.Component {
     this.generateTableRows = this.generateTableRows.bind(this);
     this.generateTableClassName = this.generateTableClassName.bind(this);
     this.generateSingle = this.generateSingle.bind(this);
-    this.printSingle = this.printSingle.bind(this);
-    this.generateAndPrintMultiple = this.generateAndPrintMultiple.bind(this);
+    this.printMany = this.printMany.bind(this);
 
     this.state = {
-      sourceSingle: [],
-      sourceSingleVisible: false,
-      sourceMultiple: [],
-      sourceMultipleVisible: false,
+      sourceSingle: undefined,
+      sourceMany: undefined,
     };
   }
 
@@ -45,11 +40,7 @@ export default class Table extends React.Component {
         for (let j = 0; j < size; j++) {
           data[i][j] = (
             <td className="table-cell" key={`${i}_${j}`}>
-              <div className="table-cell-position">
-                <span className={"table-cell-content"}>
-                  {shuffledRange.shift()}
-                </span>
-              </div>
+              <div className="table-cell-position">{shuffledRange.shift()}</div>
             </td>
           );
         }
@@ -79,60 +70,60 @@ export default class Table extends React.Component {
     }
   }
 
-  generateTableClassName(multiple = false) {
+  generateTableClassName(many = false) {
     const { colors, rotated, size } = this.props;
     let className = "table table-" + size + " table-" + colors;
     if (rotated !== "false") {
       className += " table-rotated";
     }
-    if (multiple) {
+    if (many) {
       className += " table-printonly";
     }
-
     return className;
   }
 
   generateSingle() {
-    const sourceSingle = [
-      <table className={this.generateTableClassName()} id="single" key="single">
-        <tbody>{this.generateTableRows()}</tbody>
-      </table>,
-    ];
+    const sourceSingle = (
+      <div className="table-container">
+        <table
+          className={this.generateTableClassName()}
+          onClick={this.generateSingle}
+        >
+          <tbody>{this.generateTableRows()}</tbody>
+        </table>
+      </div>
+    );
 
-    this.setState({ sourceSingle, sourceSingleVisible: true }, () => {
-      html2canvas(document.getElementById("single")).then((canvas) => {
-        document.getElementById("canvasContainer").replaceChildren(canvas);
-        this.setState({ sourceSingleVisible: false });
-      });
-    });
+    this.setState({ sourceSingle });
   }
 
-  printSingle(e) {
-    e.preventDefault();
-    this.setState({ sourceSingleVisible: true }, () => window.print());
-  }
-
-  generateAndPrintMultiple(e) {
-    e.preventDefault();
+  printMany() {
     const { lang } = this.props;
-    const sourceMultiple = [];
-    const count = Number(prompt(Locales[lang].table.printHowMany), 10);
+    const sourceMany = [];
+    const promptResult = prompt(Locales[lang].table.printHowMany);
 
-    if (!isNaN(count) && count % 1 === 0 && count > 1 && count < 101) {
+    if (promptResult === null) {
+      return;
+    }
+
+    const count = Number(promptResult, 10);
+
+    if (!isNaN(count) && count % 1 === 0 && count > 0 && count < 101) {
       for (let i = 0; i < count; i++) {
-        sourceMultiple.push(
-          <div key={`multiple_${i}`}>
+        const el = (
+          <React.Fragment key={`many_${i}`}>
             <table className={this.generateTableClassName(true)}>
               <tbody>{this.generateTableRows()}</tbody>
             </table>
             {i + 1 < count ? <div className="page-break"></div> : undefined}
-          </div>
+          </React.Fragment>
         );
+        sourceMany.push(el);
       }
 
-      this.setState({ sourceMultiple, sourceMultipleVisible: true }, () =>
-        window.print()
-      );
+      this.setState({ sourceMany }, () => {
+        window.print();
+      });
     } else {
       alert(Locales[lang].table.printCountIncorrect);
     }
@@ -144,39 +135,36 @@ export default class Table extends React.Component {
 
   render() {
     const { lang } = this.props;
-    const {
-      sourceSingle,
-      sourceSingleVisible,
-      sourceMultiple,
-      sourceMultipleVisible,
-    } = this.state;
+    const { sourceSingle, sourceMany } = this.state;
 
     window.onafterprint = () =>
       this.setState({
-        sourceSingleVisible: false,
-        sourceMultipleVisible: false,
+        sourceMany: undefined,
       });
 
     return (
       <>
-        <button className="table-button" onClick={this.generateSingle}>
-          {Locales[lang].table.regenerateSingle}
-        </button>
-        <button className="table-button" onClick={this.printSingle}>
-          {Locales[lang].table.printSingle}
-        </button>
-        <button
-          className="table-button"
-          onClick={this.generateAndPrintMultiple}
-        >
-          {Locales[lang].table.printMultiple}
-        </button>
+        <div className="mx-auto mb-8 grid max-w-7xl gap-4 px-8 text-center print:hidden md:grid-cols-2">
+          <button
+            className="rounded-lg border border-slate-600 bg-white p-4 text-lg shadow-lg hover:bg-slate-50 active:bg-slate-100 active:shadow-xl"
+            onClick={this.printMany}
+          >
+            {Locales[lang].table.printMany}
+          </button>
 
-        <div className="table-container">
-          {sourceSingleVisible && sourceSingle}
-          {sourceMultipleVisible && sourceMultiple}
-          <div className="canvas-container" id="canvasContainer" />
+          <button
+            className="rounded-lg border-2 border-slate-600 bg-white p-4 text-lg shadow-lg hover:bg-slate-50 active:bg-slate-100 active:shadow-xl"
+            onClick={this.generateSingle}
+          >
+            {Locales[lang].table.generateSingle}
+          </button>
         </div>
+
+        <div className="bg-white px-8 shadow-lg print:hidden">
+          {sourceSingle}
+        </div>
+
+        {sourceMany}
       </>
     );
   }

@@ -14,7 +14,7 @@ export default class App extends React.Component {
     this.tableRef = React.createRef();
 
     this.state = {
-      lang: "cs",
+      lang: "en",
       colors: "graywhite",
       rotated: "false",
       size: "4",
@@ -34,12 +34,12 @@ export default class App extends React.Component {
 
   switchLang() {
     this.setState((prevState) => {
-      if (prevState.lang === "cs") {
-        return { lang: "en" };
-      }
-
       if (prevState.lang === "en") {
         return { lang: "cs" };
+      }
+
+      if (prevState.lang === "cs") {
+        return { lang: "en" };
       }
     });
   }

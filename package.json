@@ -1,5 +1,5 @@
 {
-  "name": "schulte",
+  "name": "schulte-table",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,13 +14,13 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "eslint": "8.53.0",
-    "eslint-config-prettier": "9.0.0",
+    "eslint": "8.55.0",
+    "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.29.0",
     "eslint-plugin-react": "7.33.2",
     "prettier": "3.1.0",
-    "prettier-plugin-tailwindcss": "^0.5.7",
-    "tailwindcss": "^3.3.5"
+    "prettier-plugin-tailwindcss": "0.5.9",
+    "tailwindcss": "3.3.6"
   },
   "browserslist": {
     "production": [

@@ -1,19 +1,17 @@
-# Schulteho tabulka
+# Schulte Table
 
-## O co jde?
+## What's it all about?
 
-Drobná aplikace na [trénování postřehu](https://www.petrruzicka.com/blog/tabulky/), vyvinutá pro [Petra Růžičku](https://www.petrruzicka.com/).
+Tiny app to train your peripheral vision, ability to multitask, ability to work under stress, and so much more. Developed for [Petr Růžička](https://www.petrruzicka.com/blog/tabulky/).
 
-## Jaké má aplikace funkce?
+## How to use it?
 
-- Vygenerování a zobrazení Schulteho tabulky podle parametrů obtížnosti
-- Tisk libovolného počtu tabulek (1-100)
-- 2 jazykové mutace
+Focus and try to visually find all the numbers/letters in their proper order (1, 2, 3... A, B, C...). You'll soon find it's very immersive.
 
-## Kde tahle verze běží?
+## Where is this app running?
 
-Mrkněte na [schulteho-tabulka.netlify.com](https://schulteho-tabulka.netlify.com/) a trénujte!
+Check it out at [schulte-table-app.netlify.com](https://schulte-table-app.netlify.com/) and train!
 
-## Chcete si ji spustit u sebe?
+## Would you like to run it on your localhost?
 
-Nainstalujte balíčky pomocí `yarn` a pak spusťte pomocí `yarn start`.
+Clone the repository, install the packages via `npm i`, and then run the app via `npm run start`.

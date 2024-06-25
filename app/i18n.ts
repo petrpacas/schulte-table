@@ -1,4 +1,4 @@
-export default {
+const i18n = {
   en: {
     app: {
       name: "🧠 Schulte Table",
@@ -14,6 +14,12 @@ export default {
       type: {
         numbers: "Numbers",
         letters: "Letters",
+      },
+      size: {
+        4: "4x4",
+        5: "5x5",
+        6: "6x6",
+        7: "7x7",
       },
       rotated: {
         false: "Disabled",
@@ -51,6 +57,12 @@ export default {
         numbers: "Čísla",
         letters: "Písmena",
       },
+      size: {
+        4: "4x4",
+        5: "5x5",
+        6: "6x6",
+        7: "7x7",
+      },
       rotated: {
         false: "Vypnutá",
         true: "Zapnutá",
@@ -72,3 +84,5 @@ export default {
     },
   },
 };
+
+export default i18n;

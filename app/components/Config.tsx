@@ -1,9 +1,33 @@
-/* eslint-disable react/prop-types */
-import React from "react";
-import Locales from "../Locales";
+import i18n from "../i18n";
+import { ConfigTypes, I18nConfig, I18nStructure } from "../types";
 
-const Config = ({ handleChange, lang, colors, rotated, size, type }) => {
-  const configButton = (group, option, currentOption, label) => (
+const Config: React.FC<ConfigTypes> = ({
+  handleChange,
+  lang,
+  colors,
+  rotated,
+  size,
+  type,
+}) => {
+  const i18nConfig: I18nStructure = i18n;
+  const getI18nValue = (
+    lang: keyof typeof i18n,
+    key: keyof I18nConfig,
+    subKey: string
+  ) => {
+    const config = i18nConfig[lang]?.config;
+    if (config && key in config) {
+      return (config[key] as any)[subKey];
+    }
+    return "";
+  };
+
+  const configButton = (
+    group: keyof I18nConfig,
+    option: string,
+    currentOption: string,
+    label: string | undefined = undefined
+  ) => (
     <div className="flex">
       <input
         className="peer appearance-none"
@@ -20,14 +44,14 @@ const Config = ({ handleChange, lang, colors, rotated, size, type }) => {
         }
         htmlFor={`${group}-${option}`}
       >
-        {label || Locales[lang].config[group][option]}
+        {label || getI18nValue(lang, group, option)}
       </label>
     </div>
   );
 
   const configType = (
     <div className="rounded-lg bg-white p-4 shadow-lg">
-      <div className="pb-4 font-bold">{Locales[lang].config.legend.type}</div>
+      <div className="pb-4 font-bold">{i18n[lang].config.legend.type}</div>
       <div className="flex flex-wrap justify-center gap-4">
         {configButton("type", "numbers", type)}
         {configButton("type", "letters", type)}
@@ -37,21 +61,19 @@ const Config = ({ handleChange, lang, colors, rotated, size, type }) => {
 
   const configSize = (
     <div className="rounded-lg bg-white p-4 shadow-lg">
-      <div className="pb-4 font-bold">{Locales[lang].config.legend.size}</div>
+      <div className="pb-4 font-bold">{i18n[lang].config.legend.size}</div>
       <div className="flex flex-wrap justify-center gap-4">
-        {configButton("size", "4", size, "4x4")}
-        {configButton("size", "5", size, "5x5")}
-        {configButton("size", "6", size, "6x6")}
-        {configButton("size", "7", size, "7x7")}
+        {configButton("size", "4", size)}
+        {configButton("size", "5", size)}
+        {configButton("size", "6", size)}
+        {configButton("size", "7", size)}
       </div>
     </div>
   );
 
   const configRotated = (
     <div className="rounded-lg bg-white p-4 shadow-lg">
-      <div className="pb-4 font-bold">
-        {Locales[lang].config.legend.rotated}
-      </div>
+      <div className="pb-4 font-bold">{i18n[lang].config.legend.rotated}</div>
       <div className="flex flex-wrap justify-center gap-4">
         {configButton("rotated", "false", rotated)}
         {configButton("rotated", "true", rotated)}
@@ -61,7 +83,7 @@ const Config = ({ handleChange, lang, colors, rotated, size, type }) => {
 
   const configColors = (
     <div className="rounded-lg bg-white p-4 shadow-lg md:col-span-3">
-      <div className="pb-4 font-bold">{Locales[lang].config.legend.colors}</div>
+      <div className="pb-4 font-bold">{i18n[lang].config.legend.colors}</div>
       <div className="flex flex-wrap justify-center gap-4">
         {configButton("colors", "graywhite", colors)}
         {configButton("colors", "blackwhite", colors)}

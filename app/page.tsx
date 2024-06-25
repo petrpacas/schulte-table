@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import "./App.css";
+"use client";
+
+import { useState } from "react";
 import Nav from "./components/Nav";
 import Config from "./components/Config";
 import Table from "./components/Table";
+import { StateTypes } from "./types";
 
-const App = () => {
-  const [settings, setSettings] = useState({
+export default function SchulteTable() {
+  const [state, setState] = useState<StateTypes>({
     lang: "en",
     colors: "graywhite",
     rotated: "false",
@@ -14,22 +16,18 @@ const App = () => {
   });
 
   const switchLang = () => {
-    setSettings((prevSettings) => {
-      if (prevSettings.lang === "en") {
-        return { ...prevSettings, lang: "cs" };
-      }
-      if (prevSettings.lang === "cs") {
-        return { ...prevSettings, lang: "en" };
-      }
-    });
+    setState((prevState) => ({
+      ...prevState,
+      lang: prevState.lang === "en" ? "cs" : "en",
+    }));
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const arg = e.target.value.split("-");
-    setSettings({ ...settings, [arg[0]]: arg[1] });
+    setState({ ...state, [arg[0]]: arg[1] });
   };
 
-  const { lang, colors, rotated, size, type } = settings;
+  const { lang, colors, rotated, size, type } = state;
 
   return (
     <>
@@ -53,6 +51,4 @@ const App = () => {
       />
     </>
   );
-};
-
-export default App;
+}

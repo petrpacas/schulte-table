@@ -2,32 +2,169 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.table {
+  border: 1px solid black;
+  border-collapse: collapse;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+.table-cell {
+  border: 1px solid black;
+  position: relative;
+  font-size: 2rem;
+}
+
+.table-cell-position {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+/* Colors */
+
+.table-graywhite .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
+.table-graywhite .table-row:nth-of-type(even) .table-cell:nth-of-type(even),
+.table-blackwhite .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
+.table-blackwhite .table-row:nth-of-type(even) .table-cell:nth-of-type(even) {
+  background-color: white;
+}
+
+.table-graywhite .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
+.table-graywhite .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
+  background-color: gainsboro;
+}
+
+.table-blackwhite .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
+.table-blackwhite .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
+  background-color: black;
+  color: white;
+}
+
+.table-blueyellow .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
+.table-blueyellow .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
+  background-color: blue;
+  color: white;
+}
+
+.table-blueyellow .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
+.table-blueyellow .table-row:nth-of-type(even) .table-cell:nth-of-type(even) {
+  background-color: yellow;
+  color: black;
+}
+
+.table-blackred .table-row:nth-of-type(odd) .table-cell:nth-of-type(even),
+.table-blackred .table-row:nth-of-type(even) .table-cell:nth-of-type(odd) {
+  background-color: black;
+  color: white;
+}
+
+.table-blackred .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
+.table-blackred .table-row:nth-of-type(even) .table-cell:nth-of-type(even) {
+  background-color: red;
+  color: white;
+}
+
+.table-lowcontrastblue
+  .table-row:nth-of-type(odd)
+  .table-cell:nth-of-type(even),
+.table-lowcontrastblue
+  .table-row:nth-of-type(even)
+  .table-cell:nth-of-type(odd) {
+  background-color: turquoise;
+  color: aqua;
+}
+
+.table-lowcontrastblue .table-row:nth-of-type(odd) .table-cell:nth-of-type(odd),
+.table-lowcontrastblue
+  .table-row:nth-of-type(even)
+  .table-cell:nth-of-type(even) {
+  background-color: aqua;
+  color: turquoise;
+}
+
+/* Rotated */
+
+.table-rotated
+  .table-row:nth-of-type(odd)
+  .table-cell:nth-of-type(odd)
+  .table-cell-position,
+.table-rotated
+  .table-row:nth-of-type(even)
+  .table-cell:nth-of-type(even)
+  .table-cell-position {
+  transform: rotate(-90deg);
+}
+
+/* Size */
+
+.table-4 .table-cell {
+  padding-bottom: 25%;
+}
+
+.table-5 .table-cell {
+  padding-bottom: 20%;
+}
+
+.table-6 .table-cell {
+  padding-bottom: calc(100% / 6);
+}
+
+.table-7 .table-cell {
+  padding-bottom: calc(100% / 7);
+}
+
+@media screen {
+  body {
+    @apply bg-slate-100;
+  }
+
+  .table-container {
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+
+  .table {
+    cursor: pointer;
+    width: 90vh;
+    width: 90dvh;
+  }
+
+  .table-printonly {
+    display: none;
+  }
+
+  @media (max-width: 639px) {
+    .table-cell {
+      font-size: 1.5rem;
+    }
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+@media print {
+  @page {
+    margin: 10mm 15mm;
+    size: auto;
+  }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .page-break {
+    break-before: page;
+  }
+
+  .table {
+    display: none;
+  }
+
+  .table-printonly {
+    display: table;
+    width: 99.9%;
   }
 }

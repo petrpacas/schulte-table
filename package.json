@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-scripts": "5.0.1"
   },
   "scripts": {
@@ -14,13 +14,12 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "eslint": "8.55.0",
+    "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-import": "2.29.0",
-    "eslint-plugin-react": "7.33.2",
-    "prettier": "3.1.0",
-    "prettier-plugin-tailwindcss": "0.5.9",
-    "tailwindcss": "3.3.6"
+    "eslint-plugin-react": "7.34.3",
+    "prettier": "3.3.2",
+    "prettier-plugin-tailwindcss": "0.6.5",
+    "tailwindcss": "3.4.4"
   },
   "browserslist": {
     "production": [

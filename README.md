@@ -6,11 +6,11 @@ Tiny app to train your peripheral vision, ability to multitask, ability to work 
 
 ## How to use it?
 
-Focus and try to visually find all the numbers/letters in their proper order (1, 2, 3... A, B, C...). You'll soon find it's very immersive.
+Focus and try to visually find all the numbers/letters in their proper order (1, 2, 3... A, B, C...). You'll soon find it pretty immersing.
 
 ## Where is this app running?
 
-Check it out at [schulte-table-app.netlify.com](https://schulte-table-app.netlify.com/) and train!
+Check it out at [schulte-table-app.netlify.app](https://schulte-table-app.netlify.app/) and train!
 
 ## Would you like to run it on your localhost?
 

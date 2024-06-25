@@ -1,67 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Nav from "./components/Nav";
 import Config from "./components/Config";
 import Table from "./components/Table";
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
+const App = () => {
+  const [settings, setSettings] = useState({
+    lang: "en",
+    colors: "graywhite",
+    rotated: "false",
+    size: "4",
+    type: "numbers",
+  });
 
-    this.handleChange = this.handleChange.bind(this);
-    this.switchLang = this.switchLang.bind(this);
-
-    this.state = {
-      lang: "en",
-      colors: "graywhite",
-      rotated: "false",
-      size: "4",
-      type: "numbers",
-    };
-  }
-
-  handleChange(e) {
-    const arg = e.target.value.split("-");
-
-    this.setState({ [arg[0]]: arg[1] });
-  }
-
-  switchLang() {
-    this.setState((prevState) => {
-      if (prevState.lang === "en") {
-        return { lang: "cs" };
+  const switchLang = () => {
+    setSettings((prevSettings) => {
+      if (prevSettings.lang === "en") {
+        return { ...prevSettings, lang: "cs" };
       }
-
-      if (prevState.lang === "cs") {
-        return { lang: "en" };
+      if (prevSettings.lang === "cs") {
+        return { ...prevSettings, lang: "en" };
       }
     });
-  }
+  };
 
-  render() {
-    const { lang, colors, rotated, size, type } = this.state;
+  const handleChange = (e) => {
+    const arg = e.target.value.split("-");
+    setSettings({ ...settings, [arg[0]]: arg[1] });
+  };
 
-    return (
-      <>
-        <Nav switchLang={this.switchLang} lang={lang} />
+  const { lang, colors, rotated, size, type } = settings;
 
-        <Config
-          handleChange={this.handleChange}
-          lang={lang}
-          colors={colors}
-          rotated={rotated}
-          size={size}
-          type={type}
-        />
+  return (
+    <>
+      <Nav switchLang={switchLang} lang={lang} />
 
-        <Table
-          lang={lang}
-          colors={colors}
-          rotated={rotated}
-          size={size}
-          type={type}
-        />
-      </>
-    );
-  }
-}
+      <Config
+        handleChange={handleChange}
+        lang={lang}
+        colors={colors}
+        rotated={rotated}
+        size={size}
+        type={type}
+      />
+
+      <Table
+        lang={lang}
+        colors={colors}
+        rotated={rotated}
+        size={size}
+        type={type}
+      />
+    </>
+  );
+};
+
+export default App;
